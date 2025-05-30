@@ -1,0 +1,73 @@
+body { 
+    margin: 0; 
+    font-family: sans-serif; 
+}
+
+#container {
+    position: relative;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.overlay {
+    position: absolute; 
+    background: rgba(255,255,255,0.8); 
+    padding: 8px; 
+    border-radius: 6px;
+    z-index: 1000;
+}
+
+.hidden {
+    display: none;
+}
+
+.top {
+    top: 10px
+}
+
+.bottom {
+    bottom: 10px
+}
+
+.left {
+    left: 10px
+}
+
+.right {
+    right: 10px
+}
+
+.menu-btn {
+    width: 36px;
+    height: 36px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-icon {
+    width: 20px;
+    height: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-icon div {
+    height: 2px;
+    background: black;
+    border-radius: 1px;
+}

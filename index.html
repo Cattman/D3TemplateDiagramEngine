@@ -3,21 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>D3 Example</title>
-    <style>
-      body { margin: 0; font-family: sans-serif; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <script src="dist/bundle.js" type="module"></script>
-    <div id="container" style="position: relative;">
-    
-      <div style="position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.8); padding: 8px; border-radius: 6px;">
-        <input type="text" id="searchInput" list="nodeNames" placeholder="Search nodes..." />
-        <datalist id="nodeNames"></datalist>
-        <button onclick="searchNode()">Search</button>
+  <script src="dist/bundle.js" type="module"></script>
+  <div id="container">
+    <div id="search-menu-btn" class="menu-btn absolute top left" onclick="toggleMenu()">
+      <div class="menu-icon">
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
-      <div id="overlay" style="position: absolute; bottom: 10px; right: 10px; background: rgba(255,255,255,0.8); padding: 8px; border-radius: 6px;">
+    </div>
+    <div id="search-overlay" class="flex overlay top left hidden">
+      <div id="search-menu-btn" class="menu-btn" onclick="toggleMenu()">
+        <div class="menu-icon">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+      <input type="text" id="searchInput" list="nodeNames" placeholder="Search nodes..." />
+      <datalist id="nodeNames"></datalist>
+      <button onclick="searchNode()">Search</button>
+      <label for="width">Screen Width</label>
+      <input id="width" name="width" type="number" value="1600">
+      <label for="height">Screen Height</label>
+      <input id="height" name="height" type="number" value="800">
+      <h3>Diagram Type</h3>
+      <div id="zoomControls">
+        <label for="width">Min Zoom</label>
+        <input id="width" name="width" type="s" value="1600">
+      </div>
+      <div id="radioGroup"></div>
+      <button onclick="refreshSvg()">Refresh Diagram</button>
+      <div id="overlay" class="overlay bottom right hidden" >
 
       </div>
     </div>
+  </div>
 </body>
