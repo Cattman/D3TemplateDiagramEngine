@@ -71,3 +71,15 @@ body {
     background: black;
     border-radius: 1px;
 }
+
+.highlight {
+    fill: orange;
+}
+
+.parent {
+    fill: purple;
+}
+
+.child {
+    fill: green;
+}
