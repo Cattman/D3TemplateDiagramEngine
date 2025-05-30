@@ -1,0 +1,78 @@
+{
+    "nodes": [
+        {
+            "id":  "cb086029-d41f-4dbf-b797-d915b0a4b6da",
+            "name":  "Blog Listing",
+            "path":  "Branches/Drexel/Feature/Blog/Blog Listing",
+            "type":  "branch",
+            "rootId":  "f74c222e-c8af-46ff-a29a-d06f3430bb36",
+            "rootName":  "Blog Listing"
+        },
+        {
+            "id":  "ff7be76f-f100-4830-ad21-9f36e34ef862",
+            "name":  "Link List Sidebar Callout",
+            "path":  "Branches/Drexel/Feature/Callouts/Link List Sidebar Callout",
+            "type":  "branch",
+            "rootId":  "9e7b700d-cd2c-467a-ac44-432e7415c09b",
+            "rootName":  "Link List Sidebar Callout"
+        },
+        {
+            "id":  "c1d5309b-a0a1-428b-b0ac-709c44c02c2b",
+            "name":  "Audience Links",
+            "path":  "Branches/Drexel/Feature/Navigation/Audience Links",
+            "type":  "branch",
+            "rootId":  "b17516ee-5783-4d8a-bbe3-e288ee3de591",
+            "rootName":  "Audience Links"
+        },
+        {
+            "id":  "553d79c0-11ea-4398-a289-ccf3a64b6e3a",
+            "name":  "Header",
+            "path":  "Branches/Drexel/Feature/Navigation/Header",
+            "type":  "branch",
+            "rootId":  "89f4a4bc-6f48-4b55-a871-9371c55e7575",
+            "rootName":  "Site Header"
+        },
+        {
+            "id":  "91607cb5-289b-4f7b-bbb7-bd1252d69f60",
+            "name":  "Prefooter Components",
+            "path":  "Branches/Drexel/Feature/Navigation/Prefooter Components",
+            "type":  "branch",
+            "rootId":  "774bea7b-3b74-4c37-82e3-cf6993dcad66",
+            "rootName":  "Prefooter Components"
+        },
+        {
+            "id":  "b928e6fc-f9e4-4cdc-a000-34f12482bf66",
+            "name":  "Primary Navigation",
+            "path":  "Branches/Drexel/Feature/Navigation/Primary Navigation",
+            "type":  "branch",
+            "rootId":  "78d805ef-594f-432a-8bae-358040a5486e",
+            "rootName":  "Primary Navigation"
+        }
+    ],
+    "links": [
+        {
+            "source": "b928e6fc-f9e4-4cdc-a000-34f12482bf66",
+            "target": "91607cb5-289b-4f7b-bbb7-bd1252d69f60"
+        },
+        {
+            "source": "b928e6fc-f9e4-4cdc-a000-34f12482bf66",
+            "target": "553d79c0-11ea-4398-a289-ccf3a64b6e3a"
+        },
+        {
+            "source": "b928e6fc-f9e4-4cdc-a000-34f12482bf66",
+            "target": "c1d5309b-a0a1-428b-b0ac-709c44c02c2b"
+        },
+        {
+            "source": "91607cb5-289b-4f7b-bbb7-bd1252d69f60",
+            "target": "553d79c0-11ea-4398-a289-ccf3a64b6e3a"
+        },
+        {
+            "source": "c1d5309b-a0a1-428b-b0ac-709c44c02c2b",
+            "target": "ff7be76f-f100-4830-ad21-9f36e34ef862"
+        },
+        {
+            "source": "ff7be76f-f100-4830-ad21-9f36e34ef862",
+            "target": "cb086029-d41f-4dbf-b797-d915b0a4b6da"
+        }
+    ]    
+}
