@@ -7,33 +7,62 @@ export const diagramType = Object.freeze({
   CIRCLE: "circle"
 });
 
-const nodes = data.nodes.sort();
-const links = data.links;
+let nodes = [];
+let links = [];
+let nodeMap = new Map();
+let childrenMap = new Map();
+let parentsMap = new Map();
 
-const sortedNames = nodes
-  .map(d => d.name)
-  .filter(Boolean)
-  .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+let screenWidth;
+let screenHeight;
+let selectedType = diagramType.FORCESIM;
 
-// Populate autocomplete dropdown
-const datalist = document.getElementById("nodeNames");
-sortedNames.forEach(name => {
-  const option = document.createElement("option");
-  option.value = name;
-  datalist.appendChild(option);
-});
+let forceLinkDistance = 100;
+let forceNodeAttraction = -200; //negative is repelling - positive is attracting
+let minZoom = 0.1;
+let maxZoom = 10;
+
+/**
+ * 
+ * @param {Array} nodeArray 
+ * @param {Array} linkArray 
+ */
+export function setDiagramData(nodeArray, linkArray) {
+  nodes = nodeArray.sort();
+  links = linkArray;
+}
+
+function sortNodeNames(nodeArray) {
+  const sortedNames = nodeArray
+    .map(d => d.name)
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+  // Populate autocomplete dropdown
+  const datalist = document.getElementById("nodeNames");
+  sortedNames.forEach(name => {
+    const option = document.createElement("option");
+    option.value = name;
+    datalist.appendChild(option);
+  });
+  return sortedNames;
+}
 
 // Build maps for fast lookup
-const nodeMap = new Map(nodes.map(d => [d.id, d]));
-const childrenMap = new Map();
-const parentsMap = new Map();
-
-links.forEach(link => {
-  if (!childrenMap.has(link.source)) childrenMap.set(link.source, []);
-  if (!parentsMap.has(link.target)) parentsMap.set(link.target, []);
-  childrenMap.get(link.source).push(link.target);
-  parentsMap.get(link.target).push(link.source);
-});
+/**
+ * 
+ * @param {*} nodesArray 
+ * @param {*} linksArray  
+ */
+function buildNodeMaps(nodesArray, linksArray) {
+  nodeMap = new Map(nodesArray.map(d => [d.id, d]));
+  linksArray.forEach(link => {
+    if (!childrenMap.has(link.source)) childrenMap.set(link.source, []);
+    if (!parentsMap.has(link.target)) parentsMap.set(link.target, []);
+    childrenMap.get(link.source).push(link.target);
+    parentsMap.get(link.target).push(link.source);
+  });
+}
 
 // Assign levels
 function assignLevels(nodes, parentsMap) {
@@ -104,7 +133,7 @@ function assignPositions(nodes, parentsMap) {
 
 let levelNodes = assignLevels(nodes, parentsMap)
 
-function nodeClick(node, nodeGroups) {
+export function nodeClick(node, nodeGroups) {
   // Reset all
       nodeGroups.select('rect').attr('fill', 'steelblue').classList.remove("highlight").remove("parent").remove("child");
       nodeGroups.selectAll('text').attr('fill', 'white');
@@ -130,6 +159,10 @@ function nodeClick(node, nodeGroups) {
       });
 }
 
+export function setDiagramSettings(width, height, type, forceLinkDistance, forceNodeAttraction) {
+
+} 
+
 /**
  * 
  * @param {string} containerId
@@ -140,7 +173,7 @@ function nodeClick(node, nodeGroups) {
  * @param {number} height 
  * @param {diagramType} type
  */
-export function generateDiagram (containerId, nodesToDisplay, parentsMap, childrenMap, width, height, type = null) {
+export function generateDiagram (containerId, nodesToDisplay) {
   const svg = d3.select("#" + containerId)
   .append('svg')
   .attr('width', width)
@@ -341,4 +374,34 @@ export function generateDiagram (containerId, nodesToDisplay, parentsMap, childr
   svg.call(zoom);
   
   return svg;
+}
+
+function appendArrow(svg) {
+  // Arrow marker
+  svg.append('defs')
+    .append('marker')
+    .attr('id', 'arrow')
+    .attr('viewBox', '0 -5 10 10')
+    .attr('refX', 20)
+    .attr('refY', 0)
+    .attr('markerWidth', 6)
+    .attr('markerHeight', 6)
+    .attr('orient', 'auto')
+    .append('path')
+    .attr('d', 'M0,-5L10,0L0,5')
+    .attr('fill', '#999');   
+}
+
+function drawLinks(container, links) {
+  // === Draw Links ===
+    container.selectAll('line')
+      .data(links)
+      .join('line')
+      .attr('x1', d => nodeMap.get(d.source.id).x)
+      .attr('y1', d => nodeMap.get(d.source.id).y + 25)
+      .attr('x2', d => nodeMap.get(d.target.id).x)
+      .attr('y2', d => nodeMap.get(d.target.id).y - 25)
+      .attr('stroke', '#999')
+      .attr('stroke-width', 2)
+      .attr('marker-end', 'url(#arrow)');
 }

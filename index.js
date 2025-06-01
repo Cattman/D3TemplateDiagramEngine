@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
-import { generateDiagram, diagramType } from './diagram.mjs';
-import data from './allTemplates.json' assert { type: 'json' };
+import { generateDiagram, diagramType, setDiagramData } from './diagram.mjs';
+import { uploadFile } from './upload.mjs';
 
 // Editable diagram params
 let screenWidth = 1600;
@@ -11,6 +11,10 @@ let forceNodeAttraction = -200; //negative is repelling - positive is attracting
 let minZoom = 0.1;
 let maxZoom = 10;
 
+window.toggleMenu = function() {
+  const overlay = document.getElementById("search-overlay");
+  overlay.classList.toggle("hidden");
+}
 
 const radioGroup = document.getElementById("radioGroup");
 
@@ -47,7 +51,22 @@ radioGroup.addEventListener("change", (e) => {
   }
 });
 
-let svg = generateDiagram("container", nodes, parentsMap, childrenMap, screenWidth, screenHeight, selectedType);
+document.getElementById("uploadBtn").addEventListener("click", async () => {
+  try {
+    const content = await uploadFile(".json");
+    console.log("File content:", content);
+
+    // Optionally parse if it's JSON
+    const data = JSON.parse(content);
+    setDiagramData(data.nodes, data.links);
+    setDiagramSettings();
+
+    let svg = generateDiagram("container", screenWidth, screenHeight, selectedType);
+    console.log("Parsed JSON:", data);
+  } catch (err) {
+    console.error("Upload failed:", err);
+  }
+});
 
 const widthInput = document.getElementById("width");
 const heightInput = document.getElementById("height");
@@ -69,11 +88,6 @@ document.querySelectorAll('input[name="diagram-type"]').forEach((radio) => {
     }
   });
 });
-
-window.toggleMenu = function() {
-  const overlay = document.getElementById("search-overlay");
-  overlay.classList.toggle("hidden");
-}
 
 window.refreshSvg = function() {
   d3.selectAll('svg').remove();
