@@ -4,7 +4,8 @@ import data from './allTemplates.json' assert { type: 'json' };
 export const diagramType = Object.freeze({
   FORCESIM: "force",
   FLOWCHART: "flow",
-  CIRCLE: "circle"
+  CIRCLE: "circle",
+  TANGLED: "tangle"
 });
 
 let nodes = [];

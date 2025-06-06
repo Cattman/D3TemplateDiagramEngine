@@ -59,7 +59,7 @@ document.getElementById("uploadBtn").addEventListener("click", async () => {
     // Optionally parse if it's JSON
     const data = JSON.parse(content);
     setDiagramData(data.nodes, data.links);
-    setDiagramSettings();
+    setDiagramSettings(widthInput, heightInput, selectedType, forceLinkDistance, forceNodeAttraction, minZoom, maxZoom);
 
     let svg = generateDiagram("container", screenWidth, screenHeight, selectedType);
     console.log("Parsed JSON:", data);
